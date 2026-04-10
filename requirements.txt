@@ -1,0 +1,7 @@
+boto3
+openai<1.25.0
+google-cloud-aiplatform
+google-auth
+transformers
+torch
+scipy

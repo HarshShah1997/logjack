@@ -162,14 +162,15 @@ See [Section 7.4 of the paper](paper/logjack-paper-v6.md#74-mitigations) for det
 
 ## Citation
 
-```bibtex
-@misc{logjack2026,
-  title={LogJack: Indirect Prompt Injection Through Cloud Logs Against LLM Debugging Agents},
-  author={Harsh Shah},
-  year={2026},
-  eprint={[arXiv ID]},
-  archivePrefix={arXiv},
-  primaryClass={cs.AI}
+```
+@misc{shah2026logjackindirectpromptinjection,
+      title={LogJack: Indirect Prompt Injection Through Cloud Logs Against LLM Debugging Agents}, 
+      author={Harsh Shah},
+      year={2026},
+      eprint={2604.15368},
+      archivePrefix={arXiv},
+      primaryClass={cs.CR},
+      url={https://arxiv.org/abs/2604.15368}, 
 }
 ```
 

@@ -6,8 +6,6 @@ LogJack demonstrates that prompt injection payloads embedded in CloudWatch logs,
 
 > Llama 3.3 70B executed injected commands verbatim in **86.2%** of trials. Six of eight models achieved **remote code execution** via `curl | bash` from a CloudWatch log entry. All tested guardrails failed to detect the embedded injections.
 
-📄 [Paper](paper/logjack-paper-v6.md) · 📊 [Results](benchmark/results/) · 🎤 [Black Hat Submission](paper/blackhat-submission.md)
-
 ---
 
 ## The Attack
@@ -157,21 +155,6 @@ print(f"Hijack rate: {hijack}/{n} ({100*hijack/n:.1f}%)")
 1. **Least-privilege tool access** — Restrict agents to read-only operations
 2. **Human-in-the-loop** — Require approval for write/modify/delete commands
 3. **Output-side validation** — Allowlist permitted operations by risk level
-
-See [Section 7.4 of the paper](paper/logjack-paper-v6.md#74-mitigations) for details.
-
-## Citation
-
-```bibtex
-@misc{logjack2026,
-  title={LogJack: Indirect Prompt Injection Through Cloud Logs Against LLM Debugging Agents},
-  author={Harsh Shah},
-  year={2026},
-  eprint={[arXiv ID]},
-  archivePrefix={arXiv},
-  primaryClass={cs.AI}
-}
-```
 
 ## License
 

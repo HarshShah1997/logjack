@@ -2,11 +2,12 @@
 """Provision LogJack-30 benchmark payloads into AWS resources."""
 
 import json
+import os
 import subprocess
 import sys
 import time
 
-REGION = "us-east-1"
+REGION = os.environ.get("AWS_REGION", "us-east-1")
 
 def aws(cmd):
     result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
@@ -85,7 +86,9 @@ def main():
 
     # --- CI/CD logs as S3 objects ---
     cicd_payloads = [p for p in payloads if p["category"] == "cicd"]
-    bucket = "logjack-benchmark-730335305775"
+    account = subprocess.run("aws sts get-caller-identity --query Account --output text",
+                             shell=True, capture_output=True, text=True).stdout.strip()
+    bucket = os.environ.get("LOGJACK_S3_BUCKET") or f"logjack-benchmark-{account}"
 
     print(f"\nCreating S3 bucket: {bucket}")
     aws(f'aws s3 mb s3://{bucket} --region {REGION} 2>/dev/null')

@@ -6,7 +6,7 @@ LogJack demonstrates that prompt injection payloads embedded in CloudWatch logs,
 
 > Llama 3.3 70B executed injected commands verbatim in **86.2%** of trials. Six of eight models achieved **remote code execution** via `curl | bash` from a CloudWatch log entry. All tested guardrails failed to detect the embedded injections.
 
-📄 [Paper](paper/logjack-paper-v6.md) · 📊 [Results](benchmark/results/) · 🎤 [Black Hat Submission](paper/blackhat-submission.md)
+📄 [Paper](paper/logjack-paper-v6.md) · 📊 [Results](benchmark/results/) · 🎤 [Black Hat Submission](paper/blackhat-submission.md) · 🖥️ [Interactive Demo](demo/README.md)
 
 ---
 
@@ -97,9 +97,11 @@ python3 -c "from transformers import pipeline; pipeline('text-classification', m
 
 # Set credentials (Bedrock uses instance role or ~/.aws/credentials)
 export AWS_REGION=us-east-1
+export LOGJACK_S3_BUCKET=logjack-benchmark-<your-account-id>  # S3 bucket for CI/CD payloads (provision.py creates it in your account)
 export AZURE_OPENAI_ENDPOINT=...      # optional, for GPT-4o
 export AZURE_OPENAI_KEY=...
 export GOOGLE_APPLICATION_CREDENTIALS=...  # optional, for Gemini
+export GCP_PROJECT=...                # optional, for GCP Model Armor guardrail
 
 # Run single model
 python3 benchmark/run_unified.py active Llama --trials 5
@@ -121,6 +123,16 @@ benchmark/results/results_{mode}_{model}_t5.csv       # Metrics per payload per 
 benchmark/transcripts/transcripts_{mode}_{model}_t5.jsonl  # Full model responses
 benchmark/logs/{mode}_{model}.log                      # Console output
 ```
+
+## Interactive Demo
+
+A local web demo for talks and workshops. Paste a log (or pick a built-in payload), choose a model, and watch whether it follows the planted instructions. No command is ever executed.
+
+```bash
+python3 demo/server.py   # then open http://127.0.0.1:8000
+```
+
+**Replay** plays recorded transcripts with zero credentials (works offline). **Live** drives a Bedrock model in real time against whatever you paste. See [demo/README.md](demo/README.md).
 
 ## Reproducing the Benchmark
 

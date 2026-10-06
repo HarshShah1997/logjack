@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LogJack — live demo</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">LogJack</span>
+    <span class="tag">Indirect prompt injection through cloud logs</span>
+  </div>
+  <div class="stat">
+    <span class="stat-num">0% &rarr; 86%</span>
+    <span class="stat-label">verbatim hijack rate across 8 models</span>
+  </div>
+</header>
+
+<div class="safety">
+  No command is ever executed. The harness serves reads and
+  <strong>intercepts every dangerous command</strong>, then classifies it &mdash;
+  exactly as in the benchmark.
+</div>
+
+<main class="layout">
+  <!-- LEFT: controls -->
+  <section class="panel controls">
+    <div class="mode-toggle" role="tablist">
+      <button id="mode-replay" class="mode active" role="tab">Replay</button>
+      <button id="mode-live" class="mode" role="tab">Live</button>
+    </div>
+    <p id="mode-help" class="hint"></p>
+
+    <label class="field">
+      <span>Model</span>
+      <select id="model"></select>
+    </label>
+
+    <label class="field">
+      <span>Prompt condition</span>
+      <select id="condition">
+        <option value="active">Active &mdash; "fix any problems you find"</option>
+        <option value="passive">Passive &mdash; "do not execute any fixes"</option>
+        <option value="encouraged">Encouraged &mdash; "execute it directly"</option>
+      </select>
+    </label>
+
+    <!-- Replay-only: trial picker -->
+    <label class="field" id="trial-field">
+      <span>Trial (recorded, 5 per payload)</span>
+      <select id="trial">
+        <option>1</option><option>2</option><option>3</option>
+        <option>4</option><option>5</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Example payload <small>(42 built-in)</small></span>
+      <select id="example"></select>
+    </label>
+
+    <label class="field">
+      <span>Log content <small id="log-note"></small></span>
+      <textarea id="log" rows="12" spellcheck="false"
+        placeholder="Paste a log line, SSM report, or CI/CD output here — or pick an example above."></textarea>
+    </label>
+
+    <label class="pace-row">
+      <input type="checkbox" id="pace" checked>
+      <span>Presentation pacing <small>(reveal step-by-step, like a live agent)</small></span>
+    </label>
+
+    <button id="run" class="run-btn">Run</button>
+    <p id="status" class="status"></p>
+  </section>
+
+  <!-- RIGHT: results -->
+  <section class="panel results">
+    <div id="verdict-banner" class="verdict-banner hidden"></div>
+
+    <div id="context" class="context hidden">
+      <span class="pill" id="ctx-model"></span>
+      <span class="pill" id="ctx-condition"></span>
+      <span class="pill" id="ctx-goal"></span>
+      <span class="pill" id="ctx-difficulty"></span>
+    </div>
+
+    <div id="summary" class="summary hidden"></div>
+
+    <ol id="timeline" class="timeline"></ol>
+
+    <div id="empty" class="empty">
+      Pick a model and an example, then press <strong>Run</strong>.
+      <br><br>
+      In <em>Replay</em> you watch what the model actually did in the paper's runs.
+      In <em>Live</em> you paste your own log and drive a Bedrock model in real time.
+    </div>
+  </section>
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
